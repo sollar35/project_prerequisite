@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
-        createUsersTable();
+
     }
 
     public void createUsersTable() {
@@ -23,7 +23,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to create new table", e);
         }
     }
 
@@ -35,7 +35,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to drop a table", e);
         }
     }
 
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to save user", e);
         }
 
     }
@@ -63,7 +63,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to remove user by id", e);
         }
     }
 
@@ -87,7 +87,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to get all users", e);
         }
 
         return users;
@@ -102,7 +102,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to clean Users table", e);
         }
     }
 }
