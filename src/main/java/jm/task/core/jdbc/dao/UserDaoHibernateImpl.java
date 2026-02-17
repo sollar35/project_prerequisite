@@ -3,6 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.HibernateUtil;
 import jm.task.core.jdbc.util.Util;
+import org.hibernate.Session;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,7 +27,9 @@ public class UserDaoHibernateImpl implements UserDao {
                     id BIGINT PRIMARY KEY AUTO_INCREMENT,
                     name VARCHAR(100),
                     lastName VARCHAR(100),
-                    age TINYINT
+                    age TINYINT,
+                    workplace VARCHAR(100)
+                    
                 )
             """).executeUpdate();
             session.getTransaction().commit();
@@ -47,10 +50,10 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(String name, String lastName, byte age, String workplace) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            session.persist(new User(name, lastName, age));
+            session.persist(new User(name, lastName, age, workplace));
             session.getTransaction().commit();
         } catch (Exception e) {
             throw new RuntimeException("Failed to save user", e);
@@ -90,6 +93,20 @@ public class UserDaoHibernateImpl implements UserDao {
             session.getTransaction().commit();
         } catch (Exception e) {
             throw new RuntimeException("Failed to clean table", e);
+        }
+    }
+
+    @Override
+    public List<User> findByWorkplace(String workplace) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                    "From User u Where u.workplace = :workplace",
+                    User.class
+            )
+                    .setParameter("workplace", workplace)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find user by workplace", e);
         }
     }
 }

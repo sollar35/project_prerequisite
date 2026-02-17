@@ -10,8 +10,8 @@ public class Main {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        User user = new User("Ivan", "Ivanov", (byte) 30);
-        session.persist(user);
+        //User user = new User("Ivan", "Ivanov", (byte) 30);
+        //session.persist(user);
 
         session.getTransaction().commit();
         session.close();
