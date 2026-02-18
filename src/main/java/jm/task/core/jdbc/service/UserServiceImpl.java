@@ -11,8 +11,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserServiceImpl() {
+        this.userDao = new UserDaoHibernateImpl();
     }
 
     public void createUsersTable() {
@@ -23,9 +23,17 @@ public class UserServiceImpl implements UserService {
         userDao.dropUsersTable();
     }
 
+    @Override
+    public void saveUser(String name, String lastName, byte age) {
+        saveUser(name, lastName, age, null);
+    }
+
+    @Override
     public void saveUser(String name, String lastName, byte age, String workplace) {
+        User user = new User(name, lastName, age, workplace);
         userDao.saveUser(name, lastName, age, workplace);
     }
+
 
     public void removeUserById(long id) {
         userDao.removeUserById(id);

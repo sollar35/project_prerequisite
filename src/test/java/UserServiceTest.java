@@ -1,20 +1,17 @@
-import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 import java.util.List;
 
 public class UserServiceTest {
-    private final UserService userService = new UserServiceImpl(new UserDaoHibernateImpl());
+    private final UserService userService = new UserServiceImpl();
 
     private final String testName = "Nick";
     private final String testLastName = "Martin";
     private final byte testAge = 15;
-    private final String testWorkplace = "google";
 
 
     @Test
@@ -42,7 +39,7 @@ public class UserServiceTest {
         try {
             userService.dropUsersTable();
             userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge, testWorkplace);
+            userService.saveUser(testName, testLastName, testAge);
 
             User user = userService.getAllUsers().get(0);
 
@@ -63,7 +60,7 @@ public class UserServiceTest {
         try {
             userService.dropUsersTable();
             userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge, testWorkplace);
+            userService.saveUser(testName, testLastName, testAge);
             userService.removeUserById(1L);
         } catch (Exception e) {
             Assert.fail("An exception occurred while testing deleting a user by id\n" + e);
@@ -75,7 +72,7 @@ public class UserServiceTest {
         try {
             userService.dropUsersTable();
             userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge, testWorkplace);
+            userService.saveUser(testName, testLastName, testAge);
             List<User> userList = userService.getAllUsers();
 
             if (userList.size() != 1) {
@@ -91,7 +88,7 @@ public class UserServiceTest {
         try {
             userService.dropUsersTable();
             userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge, testWorkplace);
+            userService.saveUser(testName, testLastName, testAge);
             userService.cleanUsersTable();
 
             if (userService.getAllUsers().size() != 0) {
@@ -100,20 +97,6 @@ public class UserServiceTest {
         } catch (Exception e) {
             Assert.fail("An exception occurred while testing clearing the users table\n" + e);
         }
-    }
-
-    @Test
-    public void findByWorkplacetest() {
-        userService.createUsersTable();
-        userService.cleanUsersTable();
-
-        userService.saveUser("John", "Smith", (byte) 30, "Google");
-        userService.saveUser("Nick", "Brown", (byte) 25, "Amazon");
-        userService.saveUser("Mike", "White", (byte) 40, "Google");
-
-        List<User> googleUsers = userService.findByWorkplace("Google");
-
-        Assert.assertEquals(2, googleUsers.size());
     }
 
 }
