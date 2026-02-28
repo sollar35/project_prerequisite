@@ -17,6 +17,6 @@ public class AppConfig {
         return new Duck2(chicken);
     }
 
-    @Bean
-    public static Horse7 getHorse(Camel8 camel) { return new Horse7();}
+//    @Bean
+//    public static Horse7 getHorse(Camel8 camel) { return new Horse7();}
 }
