@@ -1,0 +1,14 @@
+Index: src/main/java/app/model/Animal.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package app.model;\r\n\r\npublic abstract class Animal {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/app/model/Animal.java b/src/main/java/app/model/Animal.java
+--- a/src/main/java/app/model/Animal.java	(revision 1f89193b3cc0b30c610a2f3777394a82fd795c3e)
++++ b/src/main/java/app/model/Animal.java	(date 1771933684192)
+@@ -1,4 +1,5 @@
+ package app.model;
+ 
+ public abstract class Animal {
++
+ }
